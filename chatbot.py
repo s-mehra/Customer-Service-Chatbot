@@ -68,3 +68,18 @@ model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=
 model.summary()
 epochs = 500
 history = model.fit(padded_sequences, np.array(training_labels), epochs=epochs)
+
+
+#saving the model we just trained
+model.save("chatbot_model")
+
+
+import pickle
+
+with open('tokenizer.pickle', 'wb') as handle:
+    pickle.dump(tokenizer, handle, protocol='pickle.HIGHEST_PROTOCOL')
+
+
+with open('label_encoder.pickle', 'wb') as ecn_file:
+    pickle.dumb(lbl_encoder, ecn_file, protocol='pickle.HIGHEST_PROTOCOL')
+
