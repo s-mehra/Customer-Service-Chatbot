@@ -3,10 +3,10 @@ import json
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Embedding, GlobalAveragePooling1D
-from tensorflow.keras.preprocessing.text import Tokenizer
-from tensorflow.keras.preprocessing.sequence import pad_sequences
+from keras.models import Sequential
+from keras.layers import Dense, Embedding, GlobalAveragePooling1D
+from keras.preprocessing.text import Tokenizer
+from keras.utils import pad_sequences
 from sklearn.preprocessing import LabelEncoder
 
 
@@ -56,3 +56,15 @@ padded_sequences = pad_sequences(sequences, truncate='post', max_len=max_len)
 
 
 
+model = Sequential()
+model.add(Embedding(vocab_size, embedding_dim, input_length=max_len))
+model.add(GlobalAveragePooling1D())
+model.add(Dense(16,activation="relu"))
+model.add(Dense(16,activation="relu"))
+model.add(Dense(num_classes, activation="softmax"))
+
+model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+model.summary()
+epochs = 500
+history = model.fit(padded_sequences, np.array(training_labels), epochs=epochs)
