@@ -22,6 +22,7 @@ training_labels = []
 labels = []
 responses = []
 
+#Updating lists with items in the JSON object
 for intent in data['intents']:
     for pattern in intent['patterns']:
         training_sentences.append(pattern)
@@ -30,5 +31,28 @@ for intent in data['intents']:
 
     if intent['tag'] not in labels:
         labels.append[intent['tag']]
+
+
+
+num_classes = len(labels)
+
+
+lbl_encoder = LabelEncoder()
+lbl_encoder.fit(training_labels)
+training_labels = lbl_encoder.transform(training_labels)
+
+vocab_size = 1000
+embedding_dim = 16
+max_len = 20
+
+oov_token = "<OOV>"
+
+#vectorized the data using tokenization
+tokenizer = Tokenizer(num_word=vocab_size, oov_token=oov_token)
+tokenizer.fit_on_texts(training_sentences)
+word_index = tokenizer.word_index
+sequences = tokenizer.texts_to_sequences(training_sentences)
+padded_sequences = pad_sequences(sequences, truncate='post', max_len=max_len)
+
 
 
