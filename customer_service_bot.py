@@ -20,7 +20,7 @@ def chat():
     model = keras.models.load_model("chatbot_model")
 
     #load tokenizer
-    with open('tokenizer.pickle', 'wb') as handle:
+    with open('tokenizer.pickle', 'rb') as handle:
         tokenizer = pickle.load(handle)
 
     #loading label encoder
@@ -44,3 +44,4 @@ def chat():
                 print(Fore.GREEN + "Bot: " + Style.RESET_ALL, np.random.choice(i['responses']))
 
 print(Fore.YELLOW + "Start messaging (Type 'quit' to stop.)" + Style.RESET_ALL)
+chat()

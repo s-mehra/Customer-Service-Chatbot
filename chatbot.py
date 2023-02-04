@@ -27,10 +27,10 @@ for intent in data['intents']:
     for pattern in intent['patterns']:
         training_sentences.append(pattern)
         training_labels.append(intent['tag'])
-    responses.append(intent['response'])
+    responses.append(intent['responses'])
 
     if intent['tag'] not in labels:
-        labels.append[intent['tag']]
+        labels.append(intent['tag'])
 
 
 
@@ -48,11 +48,11 @@ max_len = 20
 oov_token = "<OOV>"
 
 #vectorized the data using tokenization
-tokenizer = Tokenizer(num_word=vocab_size, oov_token=oov_token)
+tokenizer = Tokenizer(num_words=vocab_size, oov_token=oov_token)
 tokenizer.fit_on_texts(training_sentences)
 word_index = tokenizer.word_index
 sequences = tokenizer.texts_to_sequences(training_sentences)
-padded_sequences = pad_sequences(sequences, truncate='post', max_len=max_len)
+padded_sequences = pad_sequences(sequences, truncating='post', maxlen=max_len)
 
 
 
@@ -81,5 +81,5 @@ with open('tokenizer.pickle', 'wb') as handle:
 
 
 with open('label_encoder.pickle', 'wb') as ecn_file:
-    pickle.dumb(lbl_encoder, ecn_file, protocol='pickle.HIGHEST_PROTOCOL')
+    pickle.dump(lbl_encoder, ecn_file, protocol='pickle.HIGHEST_PROTOCOL')
 
