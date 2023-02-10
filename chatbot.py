@@ -44,16 +44,13 @@ training_labels = lbl_encoder.transform(training_labels)
 vocab_size = 1000
 embedding_dim = 16
 max_len = 20
-
 oov_token = "<OOV>"
 
-#vectorized the data using tokenization
 tokenizer = Tokenizer(num_words=vocab_size, oov_token=oov_token)
 tokenizer.fit_on_texts(training_sentences)
 word_index = tokenizer.word_index
 sequences = tokenizer.texts_to_sequences(training_sentences)
 padded_sequences = pad_sequences(sequences, truncating='post', maxlen=max_len)
-
 
 
 model = Sequential()
@@ -75,11 +72,10 @@ model.save("chatbot_model")
 
 
 import pickle
-
+# to save the fitted tokenizer
 with open('tokenizer.pickle', 'wb') as handle:
-    pickle.dump(tokenizer, handle, protocol='pickle.HIGHEST_PROTOCOL')
-
-
+    pickle.dump(tokenizer, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    
+# to save the fitted label encoder
 with open('label_encoder.pickle', 'wb') as ecn_file:
-    pickle.dump(lbl_encoder, ecn_file, protocol='pickle.HIGHEST_PROTOCOL')
-
+    pickle.dump(lbl_encoder, ecn_file, protocol=pickle.HIGHEST_PROTOCOL)
